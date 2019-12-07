@@ -23,9 +23,13 @@ while True:
     for s in read_socket:
         if s == server_socket:
             client_socket, address = server_socket.accept()
+            #  inja behtar ast ke thread benevisim ke az fard name va pass begirim va tashkhis dahim taraf ki hast
+            # ke baghie barname ejra shavad.
+            #  estefade az rejecs ya ijad header jahate ersale user va pass be samte server
 
             if client_socket:
-                client_socket.send(bytes("welcome!", 'utf-8'))
+                client_socket.send(bytes("welcome!", 'utf-8'))  # inja username va pass daryaft mikonad
+                # bayad user va pass baham vared konad be sorate pack shode
                 socket_list.append(client_socket)
                 user = address[0]
                 clients[client_socket] = user
@@ -37,6 +41,9 @@ while True:
 
         else:
             message = s.recv(1024)
+            #inja bayad ye function seda zade beshe ke bere username va pass ra check konad
+            # agar username va pass dorost bood menu neshoon bede
+            # agar ham dorost nabood payam bede ke ghalate
             if not message:
                 socket_list.remove(s)
                 del clients[s]
@@ -45,6 +52,7 @@ while True:
             for client_socket in clients:
                 if client_socket != s:
                     client_socket.send(message)
+                    # inja elam mikonim ke baraye hame befrest payam
     for s in exception_socket:
         socket_list.remove(s)
         del clients[s]
